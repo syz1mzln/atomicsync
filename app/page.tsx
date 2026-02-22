@@ -1,65 +1,91 @@
-import Image from "next/image";
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
+import { useNTPSync } from '@/hooks/useNTPSync'
+import { useLocalStorage } from '@/hooks/useLocalStorage'
+import { getLocalTimezone } from '@/lib/timezone'
+import { UtilityBar } from '@/components/section1/UtilityBar'
+import { LatencyWarningBanner } from '@/components/section1/LatencyWarningBanner'
+import { TimeHMS } from '@/components/section1/TimeHMS'
+import { AMPMIndicator } from '@/components/section1/AMPMIndicator'
+import { PrimaryTimezoneLabel } from '@/components/section1/PrimaryTimezoneLabel'
+import { SyncStatusIndicator } from '@/components/section1/SyncStatusIndicator'
+import { TimezoneStrip } from '@/components/section1/TimezoneStrip'
+import { WatchSettingTip } from '@/components/section1/WatchSettingTip'
+import { ScrollCue } from '@/components/section1/ScrollCue'
+import { PollSection } from '@/components/section2/PollSection'
 
 export default function Home() {
+  const { getDisplayTime, syncStatus, latencyMs, manualSync } = useNTPSync()
+  const [is24h, setIs24h] = useLocalStorage<boolean>('atomictime_time_format_24h', true)
+  const [isPM, setIsPM] = useState(false)
+  const tzRef = useRef<string>('UTC')
+
+  // Track AM/PM for AMPMIndicator when in 12h mode
+  useEffect(() => {
+    tzRef.current = getLocalTimezone()
+    const interval = setInterval(() => {
+      const now = new Date(getDisplayTime())
+      const h = parseInt(
+        new Intl.DateTimeFormat('en-US', {
+          hour: 'numeric',
+          hour12: false,
+          timeZone: tzRef.current,
+        }).format(now),
+        10
+      )
+      setIsPM(h >= 12)
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [getDisplayTime])
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main style={{ backgroundColor: 'var(--bg-base)' }}>
+      {/* Latency warning — sticky at top of main, spans full viewport width */}
+      <LatencyWarningBanner latencyMs={latencyMs} />
+
+      {/* ── Section 1: Time Instrument ── */}
+      <section
+        className="relative flex flex-col items-center justify-center px-4"
+        style={{ minHeight: '100dvh' }}
+      >
+        {/* Utility bar — top right (12/24h | sync | dark mode) */}
+        <div className="absolute top-4 right-4">
+          <UtilityBar
+            syncStatus={syncStatus}
+            manualSync={manualSync}
+            is24h={is24h}
+            onFormat={setIs24h}
+          />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Core time display */}
+        <div className="flex flex-col items-center gap-3">
+          {/* HH:MM:SS + AM/PM */}
+          <div className="flex items-end gap-2">
+            <TimeHMS getDisplayTime={getDisplayTime} is24h={is24h} />
+            {!is24h && <AMPMIndicator isPM={isPM} />}
+          </div>
+
+          {/* Timezone label */}
+          <PrimaryTimezoneLabel getDisplayTime={getDisplayTime} />
+
+          {/* Sync status */}
+          <SyncStatusIndicator status={syncStatus} />
+
+          {/* Secondary clocks strip */}
+          <TimezoneStrip getDisplayTime={getDisplayTime} />
+
+          {/* Watch-setting tip */}
+          <WatchSettingTip />
         </div>
-      </main>
-    </div>
-  );
+
+        {/* Scroll cue */}
+        <ScrollCue />
+      </section>
+
+      {/* ── Section 2: Poll + Waitlist ── */}
+      <PollSection />
+    </main>
+  )
 }
