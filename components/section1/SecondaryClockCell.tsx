@@ -12,7 +12,12 @@ interface SecondaryClockCellProps {
   onChange: (city: City) => void
 }
 
-export function SecondaryClockCell({ city, getDisplayTime, onRemove, onChange }: SecondaryClockCellProps) {
+export function SecondaryClockCell({
+  city,
+  getDisplayTime,
+  onRemove,
+  onChange,
+}: SecondaryClockCellProps) {
   const [time, setTime] = useState({ hours: 0, minutes: 0 })
   const [selectorOpen, setSelectorOpen] = useState(false)
   const rafRef = useRef<number>(0)

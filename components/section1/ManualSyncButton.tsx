@@ -17,10 +17,7 @@ export function ManualSyncButton({ status, onSync }: ManualSyncButtonProps) {
       aria-label="Sync time"
       disabled={status === 'syncing'}
     >
-      <RefreshCw
-        size={18}
-        className={status === 'syncing' ? 'animate-spin' : ''}
-      />
+      <RefreshCw size={18} className={status === 'syncing' ? 'animate-spin' : ''} />
     </button>
   )
 }

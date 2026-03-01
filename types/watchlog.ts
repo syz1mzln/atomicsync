@@ -1,8 +1,4 @@
-export type TipBarMode =
-  | 'tip'
-  | 'return-no-watches'
-  | 'return-one-watch'
-  | 'return-multi-watches'
+export type TipBarMode = 'tip' | 'return-no-watches' | 'return-one-watch' | 'return-multi-watches'
 
 export interface Watch {
   id: string

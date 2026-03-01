@@ -30,10 +30,7 @@ export function PrimaryTimezoneLabel({ getDisplayTime }: PrimaryTimezoneLabelPro
   }, [getDisplayTime])
 
   return (
-    <p
-      className="text-xs font-mono tracking-wide mt-1"
-      style={{ color: 'var(--label-primary)' }}
-    >
+    <p className="text-xs font-mono tracking-wide mt-1" style={{ color: 'var(--label-primary)' }}>
       {label}
     </p>
   )

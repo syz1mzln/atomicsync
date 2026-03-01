@@ -57,21 +57,27 @@ export function TimeHMS({ getDisplayTime, is24h }: TimeHMSProps) {
     return () => cancelAnimationFrame(rafRef.current)
   }, [getDisplayTime])
 
-  const displayHours = is24h
-    ? time.hours
-    : time.hours % 12 === 0
-    ? 12
-    : time.hours % 12
+  const displayHours = is24h ? time.hours : time.hours % 12 === 0 ? 12 : time.hours % 12
 
   const pad = (n: number) => String(n).padStart(2, '0')
 
   return (
     <div className="flex items-center leading-none select-none">
-      <span className={SIZE_CLASS} style={DIGIT_FONT}>{pad(displayHours)}</span>
-      <span className={`${SIZE_CLASS} pb-1`} style={COLON_FONT}>:</span>
-      <span className={SIZE_CLASS} style={DIGIT_FONT}>{pad(time.minutes)}</span>
-      <span className={`${SIZE_CLASS} pb-1`} style={COLON_FONT}>:</span>
-      <span className={SIZE_CLASS} style={DIGIT_FONT}>{pad(time.seconds)}</span>
+      <span className={SIZE_CLASS} style={DIGIT_FONT}>
+        {pad(displayHours)}
+      </span>
+      <span className={`${SIZE_CLASS} pb-1`} style={COLON_FONT}>
+        :
+      </span>
+      <span className={SIZE_CLASS} style={DIGIT_FONT}>
+        {pad(time.minutes)}
+      </span>
+      <span className={`${SIZE_CLASS} pb-1`} style={COLON_FONT}>
+        :
+      </span>
+      <span className={SIZE_CLASS} style={DIGIT_FONT}>
+        {pad(time.seconds)}
+      </span>
     </div>
   )
 }

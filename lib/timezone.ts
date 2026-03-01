@@ -11,7 +11,7 @@ export function getLocalTimezone(): string {
  */
 export function formatTimeComponents(
   timestamp: number,
-  timezone: string
+  timezone: string,
 ): { hours: number; minutes: number; seconds: number; isPM: boolean } {
   const date = new Date(timestamp)
   const parts = new Intl.DateTimeFormat('en-US', {
@@ -22,8 +22,7 @@ export function formatTimeComponents(
     hour12: false,
   }).formatToParts(date)
 
-  const get = (type: string) =>
-    parseInt(parts.find((p) => p.type === type)?.value ?? '0', 10)
+  const get = (type: string) => parseInt(parts.find((p) => p.type === type)?.value ?? '0', 10)
 
   const hours24 = get('hour')
   return {
@@ -39,7 +38,7 @@ export function formatTimeComponents(
  */
 export function formatSecondaryHHMM(
   timestamp: number,
-  offsetMinutes: number
+  offsetMinutes: number,
 ): { hours: number; minutes: number } {
   // Apply UTC offset: timestamp is already in UTC ms
   const utcMs = timestamp + offsetMinutes * 60 * 1000
@@ -67,9 +66,8 @@ export function getTimezoneLabel(timezone: string): string {
     timeZone: timezone,
     timeZoneName: 'longOffset',
   })
-  const offsetPart = formatter
-    .formatToParts(date)
-    .find((p) => p.type === 'timeZoneName')?.value ?? ''
+  const offsetPart =
+    formatter.formatToParts(date).find((p) => p.type === 'timeZoneName')?.value ?? ''
 
   // offsetPart is like "GMT+08:00" or "GMT-05:00"
   const match = offsetPart.match(/GMT([+-]\d{2}:\d{2})/)

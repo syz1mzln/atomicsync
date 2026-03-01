@@ -6,7 +6,6 @@ import { useWatchLog } from '../useWatchLog'
 // Mock useLocalStorage with useState so state updates work in tests
 vi.mock('../useLocalStorage', () => ({
   useLocalStorage: <T>(key: string, defaultValue: T) => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [value, setValue] = useState<T>(defaultValue)
     return [value, setValue] as const
   },

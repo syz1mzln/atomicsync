@@ -42,7 +42,7 @@ const VOTE_OPTIONS: {
     feature: 'other',
     emoji: '✏️',
     title: 'Other',
-    description: "Something else? Tell us what bothers you most.",
+    description: 'Something else? Tell us what bothers you most.',
   },
 ]
 
@@ -108,9 +108,7 @@ export function PollSection() {
 
   const submitDisabled = selected === 'other' && !otherText.trim()
 
-  const totalVotes = voted
-    ? Object.values(counts).reduce<number>((acc, v) => acc + (v ?? 0), 0)
-    : 0
+  const totalVotes = voted ? Object.values(counts).reduce<number>((acc, v) => acc + (v ?? 0), 0) : 0
 
   if (!mounted) return null
 
@@ -122,10 +120,7 @@ export function PollSection() {
       <div className="flex flex-col items-center gap-6 w-full max-w-lg">
         {/* Heading */}
         <div className="flex flex-col items-center gap-2 text-center">
-          <h2
-            className="text-2xl font-mono font-medium"
-            style={{ color: 'var(--label-primary)' }}
-          >
+          <h2 className="text-2xl font-mono font-medium" style={{ color: 'var(--label-primary)' }}>
             What should we build next?
           </h2>
           <p className="text-sm font-mono" style={{ color: 'var(--label-muted)' }}>
@@ -180,12 +175,7 @@ export function PollSection() {
         )}
 
         {/* Email reveal — shown post-vote */}
-        {voted && (
-          <EmailRevealSection
-            voted={voted}
-            otherText={otherText || undefined}
-          />
-        )}
+        {voted && <EmailRevealSection voted={voted} otherText={otherText || undefined} />}
       </div>
     </section>
   )

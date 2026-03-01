@@ -81,9 +81,7 @@ export function TimezoneStrip({ getDisplayTime }: TimezoneStripProps) {
       )}
 
       {/* Add button — hidden when 4 clocks active */}
-      {cities.length < 4 && (
-        <TimezoneSelector onSelect={addCity} />
-      )}
+      {cities.length < 4 && <TimezoneSelector onSelect={addCity} />}
     </div>
   )
 }

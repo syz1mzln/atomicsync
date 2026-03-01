@@ -30,9 +30,7 @@ export async function POST(req: NextRequest) {
   await supabase.from('votes').insert(insertData)
 
   // Return aggregate counts
-  const { data } = await supabase
-    .from('votes')
-    .select('feature')
+  const { data } = await supabase.from('votes').select('feature')
 
   const counts: Record<Feature, number> = {
     rotation: 0,

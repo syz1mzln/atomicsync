@@ -32,7 +32,7 @@ export default function Home() {
           hour12: false,
           timeZone: tzRef.current,
         }).format(now),
-        10
+        10,
       )
       setIsPM(h >= 12)
     }, 1000)

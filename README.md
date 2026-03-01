@@ -47,12 +47,12 @@ Deploy via [Vercel](https://vercel.com). No server configuration required — al
 
 ## Phase Roadmap
 
-| Phase | Feature | Go Signal |
-|-------|---------|-----------|
-| 1 (current) | Atomic sync webapp — precision time reference + waitlist | >200 waitlist signups in 8 weeks |
-| 2 | Watch rotation + winding tracker | >50% of beta users log 2+ check-ins/week |
-| 3 | Accuracy drift logger + movement benchmarks | 30-day retention in beta cohort |
-| 4 | Service logbook + TCO dashboard | Return visits driven by service planning |
+| Phase       | Feature                                                  | Go Signal                                |
+| ----------- | -------------------------------------------------------- | ---------------------------------------- |
+| 1 (current) | Atomic sync webapp — precision time reference + waitlist | >200 waitlist signups in 8 weeks         |
+| 2           | Watch rotation + winding tracker                         | >50% of beta users log 2+ check-ins/week |
+| 3           | Accuracy drift logger + movement benchmarks              | 30-day retention in beta cohort          |
+| 4           | Service logbook + TCO dashboard                          | Return visits driven by service planning |
 
 Phase 2 begins only after Phase 1 go signal is reached. Each phase validates before the next builds.
 

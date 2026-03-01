@@ -47,9 +47,7 @@ export function VoteOptionCard({
 
   // Inline vote bar percentage
   const pct =
-    hasVoted && count !== null && totalVotes > 0
-      ? Math.round((count / totalVotes) * 100)
-      : null
+    hasVoted && count !== null && totalVotes > 0 ? Math.round((count / totalVotes) * 100) : null
 
   return (
     <div
@@ -77,9 +75,12 @@ export function VoteOptionCard({
         <div className="flex flex-col gap-1 flex-1 min-w-0">
           <span
             className="text-sm font-mono font-medium"
-            style={{ color: selected || isThisVoted ? 'var(--digit-primary)' : 'var(--label-primary)' }}
+            style={{
+              color: selected || isThisVoted ? 'var(--digit-primary)' : 'var(--label-primary)',
+            }}
           >
-            {(selected || isThisVoted) && '✓ '}{title}
+            {(selected || isThisVoted) && '✓ '}
+            {title}
           </span>
           <span className="text-xs font-mono" style={{ color: 'var(--label-muted)' }}>
             {description}
@@ -117,7 +118,10 @@ export function VoteOptionCard({
               {count === null ? '—' : pct !== null ? `${pct}%` : '0%'}
             </span>
             {count !== null && (
-              <span className="text-xs font-mono leading-none" style={{ color: 'var(--label-muted)' }}>
+              <span
+                className="text-xs font-mono leading-none"
+                style={{ color: 'var(--label-muted)' }}
+              >
                 {count === 1 ? '1 vote' : `${count} votes`}
               </span>
             )}
