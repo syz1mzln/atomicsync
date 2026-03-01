@@ -92,7 +92,7 @@ export function WatchPicker({ onSave, onCancel }: WatchPickerProps) {
         <div className="px-3 py-2 border-t" style={{ borderColor: 'var(--border)' }}>
           <button
             onClick={onCancel}
-            className="text-xs font-mono"
+            className="text-xs font-mono cursor-pointer"
             style={{ color: 'var(--label-muted)' }}
           >
             Cancel
@@ -133,7 +133,7 @@ export function WatchPicker({ onSave, onCancel }: WatchPickerProps) {
               setSelectedBrand('')
               setIsOther(false)
             }}
-            className="text-xs font-mono"
+            className="text-xs font-mono cursor-pointer"
             style={{ color: 'var(--label-muted)' }}
             aria-label="Change brand"
           >
@@ -172,7 +172,7 @@ export function WatchPicker({ onSave, onCancel }: WatchPickerProps) {
       <div className="flex items-center justify-end gap-3 pt-1">
         <button
           onClick={onCancel}
-          className="text-xs font-mono"
+          className="text-xs font-mono cursor-pointer"
           style={{ color: 'var(--label-muted)' }}
         >
           Cancel
@@ -180,7 +180,7 @@ export function WatchPicker({ onSave, onCancel }: WatchPickerProps) {
         <button
           onClick={handleSave}
           disabled={!canSave}
-          className="text-xs font-mono px-3 py-1.5 rounded border"
+          className="text-xs font-mono cursor-pointer px-3 py-1.5 rounded border"
           style={{
             color: canSave ? 'var(--label-primary)' : 'var(--label-muted)',
             borderColor: canSave ? 'var(--tip-border)' : 'var(--border)',

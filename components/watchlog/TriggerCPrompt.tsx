@@ -31,7 +31,7 @@ export function TriggerCPrompt({ onLog, onDismiss }: TriggerCPromptProps) {
       <div className="flex items-center gap-2">
         <button
           onClick={onLog}
-          className="text-xs font-mono"
+          className="text-xs font-mono cursor-pointer"
           style={{ color: 'var(--label-primary)' }}
         >
           Log it →
@@ -39,7 +39,7 @@ export function TriggerCPrompt({ onLog, onDismiss }: TriggerCPromptProps) {
         <button
           onClick={dismiss}
           aria-label="Dismiss"
-          className="text-xs font-mono"
+          className="text-xs font-mono cursor-pointer"
           style={{ color: 'var(--label-muted)' }}
         >
           ×

@@ -38,8 +38,8 @@ describe('WatchLogDrawer', () => {
         onLogSync={vi.fn()}
       />,
     )
-    expect(screen.getByText(/Add your first watch below/)).toBeInTheDocument()
-    expect(screen.getByText('+ Add a watch')).toBeInTheDocument()
+    expect(screen.getByText(/add your first watch/i)).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /add a watch/i })).toBeInTheDocument()
   })
 
   it('renders correct number of watch rows', () => {
@@ -138,7 +138,7 @@ describe('WatchLogDrawer', () => {
     expect(mockRemove).toHaveBeenCalledWith('w1')
   })
 
-  it('shows "+ Add a watch" in populated state', () => {
+  it('shows add watch button in header in populated state', () => {
     render(
       <WatchLogDrawer
         open={true}
@@ -150,10 +150,10 @@ describe('WatchLogDrawer', () => {
         onLogSync={vi.fn()}
       />,
     )
-    expect(screen.getByText('+ Add a watch')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /add a watch/i })).toBeInTheDocument()
   })
 
-  it('opens WatchPicker when "+ Add a watch" is clicked', async () => {
+  it('opens WatchPicker when "+" header button is clicked', async () => {
     const user = userEvent.setup()
     render(
       <WatchLogDrawer
@@ -166,7 +166,7 @@ describe('WatchLogDrawer', () => {
         onLogSync={vi.fn()}
       />,
     )
-    await user.click(screen.getByText('+ Add a watch'))
+    await user.click(screen.getByRole('button', { name: /add a watch/i }))
     expect(screen.getByPlaceholderText('Search brand…')).toBeInTheDocument()
   })
 
