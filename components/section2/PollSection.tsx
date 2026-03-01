@@ -3,9 +3,7 @@
 import { useEffect, useState } from 'react'
 import { VoteOptionCard, Feature } from './VoteOptionCard'
 import { EmailRevealSection } from './EmailRevealSection'
-
-const LS_VOTE_KEY = 'atomictime_vote'
-const LS_OTHER_KEY = 'atomictime_vote_other'
+import { STORAGE_KEYS } from '@/lib/storage-keys'
 
 interface VoteCounts {
   rotation: number | null
@@ -63,8 +61,8 @@ export function PollSection() {
   // Load persisted vote on mount
   useEffect(() => {
     setMounted(true)
-    const savedVote = localStorage.getItem(LS_VOTE_KEY) as Feature | null
-    const savedOther = localStorage.getItem(LS_OTHER_KEY) ?? ''
+    const savedVote = localStorage.getItem(STORAGE_KEYS.VOTE) as Feature | null
+    const savedOther = localStorage.getItem(STORAGE_KEYS.VOTE_OTHER) ?? ''
 
     if (savedVote) {
       setVoted(savedVote)
@@ -87,9 +85,9 @@ export function PollSection() {
     if (!selected || voted) return
 
     const text = selected === 'other' ? otherText : ''
-    localStorage.setItem(LS_VOTE_KEY, selected)
+    localStorage.setItem(STORAGE_KEYS.VOTE, selected)
     if (selected === 'other' && text) {
-      localStorage.setItem(LS_OTHER_KEY, text)
+      localStorage.setItem(STORAGE_KEYS.VOTE_OTHER, text)
     }
     setVoted(selected)
 

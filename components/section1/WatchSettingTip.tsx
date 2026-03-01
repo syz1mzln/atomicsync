@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react'
 import type { TipBarMode, Watch } from '@/types/watchlog'
+import { formatDaysAgo } from '@/lib/date'
 
 const STEPS = [
   '① Pull crown to position 2',
@@ -10,21 +11,13 @@ const STEPS = [
   '④ Push crown back in',
 ]
 
-function formatDaysAgo(epochMs: number): string {
-  const diffMs = Date.now() - epochMs
-  const diffDays = Math.floor(diffMs / (24 * 60 * 60 * 1000))
-  if (diffDays === 0) return 'today'
-  if (diffDays === 1) return 'yesterday'
-  return `${diffDays} days ago`
-}
-
 interface WatchSettingTipProps {
   mode: TipBarMode
   watches: Watch[]
   lastVisit: number | null
   lastSyncedAt: number | null
   onLog: () => void
-  onOpenMiniPicker: () => void
+  onOpenDrawer: () => void
 }
 
 const TIP_BAR_STYLE = {
@@ -38,7 +31,7 @@ export function WatchSettingTip({
   lastVisit,
   lastSyncedAt,
   onLog,
-  onOpenMiniPicker,
+  onOpenDrawer,
 }: WatchSettingTipProps) {
   const [expanded, setExpanded] = useState(false)
   const [loggedConfirm, setLoggedConfirm] = useState(false)
@@ -59,7 +52,7 @@ export function WatchSettingTip({
         <div className="flex justify-center mt-2">
           <button
             onClick={() => setExpanded(true)}
-            className="text-xs font-mono"
+            className="text-xs font-mono cursor-pointer"
             style={{ color: 'var(--label-muted)' }}
           >
             How to set your watch ↑
@@ -84,7 +77,7 @@ export function WatchSettingTip({
           </div>
           <button
             onClick={() => setExpanded(false)}
-            className="text-xs font-mono shrink-0 leading-none mt-0.5"
+            className="text-xs font-mono cursor-pointer shrink-0 leading-none mt-0.5"
             style={{ color: 'var(--label-muted)' }}
             aria-label="Close tip"
           >
@@ -107,7 +100,7 @@ export function WatchSettingTip({
         <div className="flex justify-end">
           <button
             onClick={handleLog}
-            className="text-xs font-mono min-h-[44px]"
+            className="text-xs font-mono cursor-pointer min-h-[44px]"
             style={{ color: 'var(--label-primary)' }}
           >
             {loggedConfirm ? 'Logged ✓' : 'Log watch →'}
@@ -133,7 +126,7 @@ export function WatchSettingTip({
         <div className="flex justify-end">
           <button
             onClick={handleLog}
-            className="text-xs font-mono min-h-[44px]"
+            className="text-xs font-mono cursor-pointer min-h-[44px]"
             style={{ color: 'var(--label-primary)' }}
           >
             {loggedConfirm ? 'Logged ✓' : `Set ${buttonModel} →`}
@@ -154,8 +147,8 @@ export function WatchSettingTip({
       </span>
       <div className="flex justify-end">
         <button
-          onClick={onOpenMiniPicker}
-          className="text-xs font-mono min-h-[44px]"
+          onClick={onOpenDrawer}
+          className="text-xs font-mono cursor-pointer min-h-[44px]"
           style={{ color: 'var(--label-primary)' }}
         >
           Mark as Set →

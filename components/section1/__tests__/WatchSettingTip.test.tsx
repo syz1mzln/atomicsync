@@ -16,7 +16,7 @@ const defaultProps = {
   lastVisit: null,
   lastSyncedAt: null,
   onLog: vi.fn(),
-  onOpenMiniPicker: vi.fn(),
+  onOpenDrawer: vi.fn(),
 }
 
 describe('WatchSettingTip', () => {
@@ -170,7 +170,7 @@ describe('WatchSettingTip', () => {
       expect(screen.getByRole('button', { name: /Mark as Set →/ })).toBeInTheDocument()
     })
 
-    it('calls onOpenMiniPicker when Mark as Set → is clicked', () => {
+    it('calls onOpenDrawer when Mark as Set → is clicked', () => {
       const mockMiniPicker = vi.fn()
       render(
         <WatchSettingTip
@@ -178,7 +178,7 @@ describe('WatchSettingTip', () => {
           mode="return-multi-watches"
           watches={watches}
           lastSyncedAt={null}
-          onOpenMiniPicker={mockMiniPicker}
+          onOpenDrawer={mockMiniPicker}
         />,
       )
       fireEvent.click(screen.getByRole('button', { name: /Mark as Set →/ }))

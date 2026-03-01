@@ -2,10 +2,12 @@
 
 import { useLocalStorage } from './useLocalStorage'
 import type { Watch, SyncLog } from '@/types/watchlog'
+import { getLastSyncedAt } from '@/lib/watch-utils'
+import { STORAGE_KEYS } from '@/lib/storage-keys'
 
 export function useWatchLog() {
-  const [watches, setWatches] = useLocalStorage<Watch[]>('atomictime_watches', [])
-  const [syncLog, setSyncLog] = useLocalStorage<SyncLog[]>('atomictime_sync_log', [])
+  const [watches, setWatches] = useLocalStorage<Watch[]>(STORAGE_KEYS.WATCHES, [])
+  const [syncLog, setSyncLog] = useLocalStorage<SyncLog[]>(STORAGE_KEYS.SYNC_LOG, [])
 
   const addWatch = (data: Omit<Watch, 'id' | 'addedAt'>) => {
     const newWatch: Watch = {
@@ -25,11 +27,7 @@ export function useWatchLog() {
     setSyncLog([...syncLog, entry])
   }
 
-  const getLastSyncedFor = (watchId: string): number | null => {
-    const entries = syncLog.filter((e) => e.watchId === watchId)
-    if (entries.length === 0) return null
-    return Math.max(...entries.map((e) => e.syncedAt))
-  }
+  const getLastSyncedFor = (watchId: string): number | null => getLastSyncedAt(watchId, syncLog)
 
   return { watches, syncLog, addWatch, removeWatch, logSync, getLastSyncedFor }
 }

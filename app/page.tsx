@@ -17,13 +17,13 @@ import { WatchSettingTip } from '@/components/section1/WatchSettingTip'
 import { ScrollCue } from '@/components/section1/ScrollCue'
 import { WatchLogDrawer } from '@/components/watchlog/WatchLogDrawer'
 import { TriggerCPrompt } from '@/components/watchlog/TriggerCPrompt'
-import { MiniWatchPicker } from '@/components/watchlog/MiniWatchPicker'
 import { PollSection } from '@/components/section2/PollSection'
+import { STORAGE_KEYS } from '@/lib/storage-keys'
 import type { TipBarMode } from '@/types/watchlog'
 
 export default function Home() {
   const { getDisplayTime, syncStatus, latencyMs, manualSync } = useNTPSync()
-  const [is24h, setIs24h] = useLocalStorage<boolean>('atomictime_time_format_24h', true)
+  const [is24h, setIs24h] = useLocalStorage<boolean>(STORAGE_KEYS.TIME_FORMAT, true)
   const [isPM, setIsPM] = useState(false)
   const tzRef = useRef<string>('UTC')
 
@@ -33,7 +33,6 @@ export default function Home() {
   // UI state
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [showTriggerC, setShowTriggerC] = useState(false)
-  const [miniPickerOpen, setMiniPickerOpen] = useState(false)
   const [lastVisit, setLastVisit] = useState<number | null>(null)
   const triggerCFired = useRef(false)
 
@@ -57,9 +56,9 @@ export default function Home() {
 
   // Record last visit timestamp on mount (reads previous, writes current)
   useEffect(() => {
-    const prevVisit = localStorage.getItem('atomictime_last_visit')
+    const prevVisit = localStorage.getItem(STORAGE_KEYS.LAST_VISIT)
     setLastVisit(prevVisit ? Number(prevVisit) : null)
-    localStorage.setItem('atomictime_last_visit', Date.now().toString())
+    localStorage.setItem(STORAGE_KEYS.LAST_VISIT, Date.now().toString())
   }, [])
 
   // Tip bar mode (derived from visit history + watch count)
@@ -122,7 +121,7 @@ export default function Home() {
     } else if (watches.length === 1) {
       handleLogSync(watches[0].id)
     } else {
-      setMiniPickerOpen(true)
+      setDrawerOpen(true)
     }
   }
 
@@ -171,21 +170,6 @@ export default function Home() {
             <TriggerCPrompt onLog={handleTriggerLog} onDismiss={() => setShowTriggerC(false)} />
           )}
 
-          {/* Mini watch picker for 2+ watches (Mark as Set flow) */}
-          <MiniWatchPicker
-            watches={watches}
-            open={miniPickerOpen}
-            onOpenChange={setMiniPickerOpen}
-            onSelect={(watchId) => {
-              handleLogSync(watchId)
-              setMiniPickerOpen(false)
-            }}
-            onAddNew={() => {
-              setMiniPickerOpen(false)
-              setDrawerOpen(true)
-            }}
-          />
-
           {/* Watch-setting tip / return-visit prompt */}
           <WatchSettingTip
             mode={tipBarMode}
@@ -193,7 +177,7 @@ export default function Home() {
             lastVisit={lastVisit}
             lastSyncedAt={mostRecentSync}
             onLog={handleTipBarLog}
-            onOpenMiniPicker={() => setMiniPickerOpen(true)}
+            onOpenDrawer={() => setDrawerOpen(true)}
           />
         </div>
 
