@@ -51,26 +51,20 @@ describe('WatchSettingTip', () => {
   })
 
   describe('return-no-watches mode', () => {
-    it('shows last visit text and Log sync button', () => {
+    it('shows last visit text and Log watch button', () => {
       render(
         <WatchSettingTip {...defaultProps} mode="return-no-watches" lastVisit={NOW - DAY * 3} />,
       )
       expect(screen.getByText(/Last visit/)).toBeInTheDocument()
-      expect(screen.getByText(/Log sync/)).toBeInTheDocument()
+      expect(screen.getByText(/Log watch/)).toBeInTheDocument()
     })
 
-    it('shows Dismiss button', () => {
+    it('does not show a Dismiss button', () => {
       render(<WatchSettingTip {...defaultProps} mode="return-no-watches" lastVisit={NOW - DAY} />)
-      expect(screen.getByRole('button', { name: /dismiss/i })).toBeInTheDocument()
+      expect(screen.queryByRole('button', { name: /dismiss/i })).not.toBeInTheDocument()
     })
 
-    it('hides the bar when Dismiss is clicked', () => {
-      render(<WatchSettingTip {...defaultProps} mode="return-no-watches" lastVisit={NOW - DAY} />)
-      fireEvent.click(screen.getByRole('button', { name: /dismiss/i }))
-      expect(screen.queryByText(/Last visit/)).not.toBeInTheDocument()
-    })
-
-    it('calls onLog when Log sync → is clicked', () => {
+    it('calls onLog when Log watch → is clicked', () => {
       const mockLog = vi.fn()
       render(
         <WatchSettingTip
@@ -80,7 +74,7 @@ describe('WatchSettingTip', () => {
           onLog={mockLog}
         />,
       )
-      fireEvent.click(screen.getByText(/Log sync/))
+      fireEvent.click(screen.getByText(/Log watch/))
       expect(mockLog).toHaveBeenCalled()
     })
   })
@@ -193,19 +187,19 @@ describe('WatchSettingTip', () => {
   })
 
   describe('Logged ✓ confirmation', () => {
-    it('shows Logged ✓ after Log sync → click', () => {
+    it('shows Logged ✓ after Log watch → click', () => {
       render(<WatchSettingTip {...defaultProps} mode="return-no-watches" lastVisit={NOW - DAY} />)
-      fireEvent.click(screen.getByText(/Log sync/))
+      fireEvent.click(screen.getByText(/Log watch/))
       expect(screen.getByText('Logged ✓')).toBeInTheDocument()
     })
 
-    it('reverts to Log sync → after 1.5s', () => {
+    it('reverts to Log watch → after 1.5s', () => {
       render(<WatchSettingTip {...defaultProps} mode="return-no-watches" lastVisit={NOW - DAY} />)
-      fireEvent.click(screen.getByText(/Log sync/))
+      fireEvent.click(screen.getByText(/Log watch/))
       act(() => {
         vi.advanceTimersByTime(1600)
       })
-      expect(screen.getByText(/Log sync/)).toBeInTheDocument()
+      expect(screen.getByText(/Log watch/)).toBeInTheDocument()
     })
 
     it('shows Logged ✓ after Set button click in one-watch mode', () => {

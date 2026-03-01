@@ -12,6 +12,7 @@ interface WatchLogDrawerProps {
   syncLog: SyncLog[]
   onRemove: (id: string) => void
   onAddWatch: (data: Omit<Watch, 'id' | 'addedAt'>) => void
+  onLogSync: (watchId: string) => void
 }
 
 function formatLastSet(syncedAt: number | null): string {
@@ -33,9 +34,10 @@ interface WatchRowProps {
   watch: Watch
   syncLog: SyncLog[]
   onRemove: (id: string) => void
+  onLogSync: (watchId: string) => void
 }
 
-function WatchRow({ watch, syncLog, onRemove }: WatchRowProps) {
+function WatchRow({ watch, syncLog, onRemove, onLogSync }: WatchRowProps) {
   const lastSyncedAt = getLastSyncedAt(watch.id, syncLog)
   const label = watch.nickname ?? watch.model
 
@@ -57,6 +59,13 @@ function WatchRow({ watch, syncLog, onRemove }: WatchRowProps) {
         >
           {formatLastSet(lastSyncedAt)}
         </span>
+        <button
+          onClick={() => onLogSync(watch.id)}
+          className="text-xs font-mono mt-0.5 text-left"
+          style={{ color: 'var(--label-muted)' }}
+        >
+          Mark as set →
+        </button>
       </div>
       <button
         onClick={() => onRemove(watch.id)}
@@ -77,6 +86,7 @@ export function WatchLogDrawer({
   syncLog,
   onRemove,
   onAddWatch,
+  onLogSync,
 }: WatchLogDrawerProps) {
   const [showPicker, setShowPicker] = useState(false)
 
@@ -115,14 +125,20 @@ export function WatchLogDrawer({
               {watches.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full px-6 py-12 text-center gap-4">
                   <p className="text-xs font-mono" style={{ color: 'var(--label-muted)' }}>
-                    No watches logged yet. Tap &apos;Log this sync&apos; after setting your watch to
-                    start.
+                    Add your first watch below. Tap &apos;Mark as set →&apos; on each watch to
+                    record when you set it.
                   </p>
                 </div>
               ) : (
                 <div>
                   {watches.map((watch) => (
-                    <WatchRow key={watch.id} watch={watch} syncLog={syncLog} onRemove={onRemove} />
+                    <WatchRow
+                      key={watch.id}
+                      watch={watch}
+                      syncLog={syncLog}
+                      onRemove={onRemove}
+                      onLogSync={onLogSync}
+                    />
                   ))}
                 </div>
               )}

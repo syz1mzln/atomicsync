@@ -212,6 +212,7 @@ export default function Home() {
         syncLog={syncLog}
         onRemove={removeWatch}
         onAddWatch={addWatch}
+        onLogSync={handleLogSync}
       />
     </main>
   )

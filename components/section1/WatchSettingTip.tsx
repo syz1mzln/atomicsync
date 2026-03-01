@@ -41,7 +41,6 @@ export function WatchSettingTip({
   onOpenMiniPicker,
 }: WatchSettingTipProps) {
   const [expanded, setExpanded] = useState(false)
-  const [dismissed, setDismissed] = useState(false)
   const [loggedConfirm, setLoggedConfirm] = useState(false)
   const confirmTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -97,34 +96,21 @@ export function WatchSettingTip({
   }
 
   if (mode === 'return-no-watches') {
-    if (dismissed) return null
-
     return (
       <div
-        className="w-full max-w-xl mx-auto mt-3 px-4 py-2 flex items-center justify-between gap-4"
+        className="w-full max-w-xl mx-auto mt-3 px-4 py-2 flex flex-col gap-1"
         style={TIP_BAR_STYLE}
       >
         <span className="text-xs font-mono" style={{ color: 'var(--label-primary)' }}>
           Last visit: {lastVisit ? formatDaysAgo(lastVisit) : '—'}. Log your watch?
         </span>
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex justify-end">
           <button
             onClick={handleLog}
             className="text-xs font-mono min-h-[44px]"
             style={{ color: 'var(--label-primary)' }}
           >
-            {loggedConfirm ? 'Logged ✓' : 'Log sync →'}
-          </button>
-          <button
-            onClick={() => {
-              sessionStorage.setItem('atomictime_log_prompt_dismissed', 'true')
-              setDismissed(true)
-            }}
-            aria-label="Dismiss"
-            className="text-xs font-mono min-h-[44px]"
-            style={{ color: 'var(--label-muted)' }}
-          >
-            ×
+            {loggedConfirm ? 'Logged ✓' : 'Log watch →'}
           </button>
         </div>
       </div>
@@ -138,19 +124,21 @@ export function WatchSettingTip({
 
     return (
       <div
-        className="w-full max-w-xl mx-auto mt-3 px-4 py-2 flex items-center justify-between gap-4"
+        className="w-full max-w-xl mx-auto mt-3 px-4 py-2 flex flex-col gap-1"
         style={TIP_BAR_STYLE}
       >
         <span className="text-xs font-mono" style={{ color: 'var(--label-primary)' }}>
           {displayLabel} · {lastSetLabel}
         </span>
-        <button
-          onClick={handleLog}
-          className="text-xs font-mono shrink-0 min-h-[44px]"
-          style={{ color: 'var(--label-primary)' }}
-        >
-          {loggedConfirm ? 'Logged ✓' : `Set ${buttonModel} →`}
-        </button>
+        <div className="flex justify-end">
+          <button
+            onClick={handleLog}
+            className="text-xs font-mono min-h-[44px]"
+            style={{ color: 'var(--label-primary)' }}
+          >
+            {loggedConfirm ? 'Logged ✓' : `Set ${buttonModel} →`}
+          </button>
+        </div>
       </div>
     )
   }
@@ -158,19 +146,21 @@ export function WatchSettingTip({
   // return-multi-watches
   return (
     <div
-      className="w-full max-w-xl mx-auto mt-3 px-4 py-2 flex items-center justify-between gap-4"
+      className="w-full max-w-xl mx-auto mt-3 px-4 py-2 flex flex-col gap-1"
       style={TIP_BAR_STYLE}
     >
       <span className="text-xs font-mono" style={{ color: 'var(--label-primary)' }}>
         {watches.length} watches tracked · {lastSetLabel}
       </span>
-      <button
-        onClick={onOpenMiniPicker}
-        className="text-xs font-mono shrink-0 min-h-[44px]"
-        style={{ color: 'var(--label-primary)' }}
-      >
-        Mark as Set →
-      </button>
+      <div className="flex justify-end">
+        <button
+          onClick={onOpenMiniPicker}
+          className="text-xs font-mono min-h-[44px]"
+          style={{ color: 'var(--label-primary)' }}
+        >
+          Mark as Set →
+        </button>
+      </div>
     </div>
   )
 }

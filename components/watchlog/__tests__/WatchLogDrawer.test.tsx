@@ -35,9 +35,10 @@ describe('WatchLogDrawer', () => {
         syncLog={[]}
         onRemove={vi.fn()}
         onAddWatch={vi.fn()}
+        onLogSync={vi.fn()}
       />,
     )
-    expect(screen.getByText(/No watches logged yet/)).toBeInTheDocument()
+    expect(screen.getByText(/Add your first watch below/)).toBeInTheDocument()
     expect(screen.getByText('+ Add a watch')).toBeInTheDocument()
   })
 
@@ -50,6 +51,7 @@ describe('WatchLogDrawer', () => {
         syncLog={syncLog}
         onRemove={vi.fn()}
         onAddWatch={vi.fn()}
+        onLogSync={vi.fn()}
       />,
     )
     expect(screen.getByText('Seamaster')).toBeInTheDocument()
@@ -65,6 +67,7 @@ describe('WatchLogDrawer', () => {
         syncLog={syncLog}
         onRemove={vi.fn()}
         onAddWatch={vi.fn()}
+        onLogSync={vi.fn()}
       />,
     )
     expect(screen.getByText('set today')).toBeInTheDocument()
@@ -79,6 +82,7 @@ describe('WatchLogDrawer', () => {
         syncLog={syncLog}
         onRemove={vi.fn()}
         onAddWatch={vi.fn()}
+        onLogSync={vi.fn()}
       />,
     )
     expect(screen.getByText('set yesterday')).toBeInTheDocument()
@@ -94,6 +98,7 @@ describe('WatchLogDrawer', () => {
         syncLog={oldSyncLog}
         onRemove={vi.fn()}
         onAddWatch={vi.fn()}
+        onLogSync={vi.fn()}
       />,
     )
     expect(screen.getByText('set 5 days ago')).toBeInTheDocument()
@@ -108,6 +113,7 @@ describe('WatchLogDrawer', () => {
         syncLog={[]}
         onRemove={vi.fn()}
         onAddWatch={vi.fn()}
+        onLogSync={vi.fn()}
       />,
     )
     expect(screen.getByText('never set')).toBeInTheDocument()
@@ -124,6 +130,7 @@ describe('WatchLogDrawer', () => {
         syncLog={syncLog}
         onRemove={mockRemove}
         onAddWatch={vi.fn()}
+        onLogSync={vi.fn()}
       />,
     )
     const removeButtons = screen.getAllByRole('button', { name: /remove/i })
@@ -140,6 +147,7 @@ describe('WatchLogDrawer', () => {
         syncLog={syncLog}
         onRemove={vi.fn()}
         onAddWatch={vi.fn()}
+        onLogSync={vi.fn()}
       />,
     )
     expect(screen.getByText('+ Add a watch')).toBeInTheDocument()
@@ -155,9 +163,45 @@ describe('WatchLogDrawer', () => {
         syncLog={[]}
         onRemove={vi.fn()}
         onAddWatch={vi.fn()}
+        onLogSync={vi.fn()}
       />,
     )
     await user.click(screen.getByText('+ Add a watch'))
     expect(screen.getByPlaceholderText('Search brand…')).toBeInTheDocument()
+  })
+
+  it('shows Mark as set → button for each watch row', () => {
+    render(
+      <WatchLogDrawer
+        open={true}
+        onClose={vi.fn()}
+        watches={watches}
+        syncLog={syncLog}
+        onRemove={vi.fn()}
+        onAddWatch={vi.fn()}
+        onLogSync={vi.fn()}
+      />,
+    )
+    const markButtons = screen.getAllByText('Mark as set →')
+    expect(markButtons).toHaveLength(2)
+  })
+
+  it('Mark as set → calls onLogSync with correct watch id', async () => {
+    const user = userEvent.setup()
+    const mockLogSync = vi.fn()
+    render(
+      <WatchLogDrawer
+        open={true}
+        onClose={vi.fn()}
+        watches={watches}
+        syncLog={syncLog}
+        onRemove={vi.fn()}
+        onAddWatch={vi.fn()}
+        onLogSync={mockLogSync}
+      />,
+    )
+    const markButtons = screen.getAllByText('Mark as set →')
+    await user.click(markButtons[0])
+    expect(mockLogSync).toHaveBeenCalledWith('w1')
   })
 })
