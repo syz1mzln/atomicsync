@@ -1,6 +1,6 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -64,79 +64,79 @@
   --radius: 0.625rem;
 
   /* AtomicSync dark tokens (active by default — .dark class applied before first paint) */
-  --bg-base: #0D0B08;
-  --digit-primary: #E6C699;
-  --digit-colon: #B09060;
-  --digit-dim: #7A5E35;
-  --label-primary: #55504A;
-  --label-muted: #332E28;
-  --tip-border: #3D3020;
+  --bg-base: #0d0b08;
+  --digit-primary: #e6c699;
+  --digit-colon: #b09060;
+  --digit-dim: #7a5e35;
+  --label-primary: #55504a;
+  --label-muted: #332e28;
+  --tip-border: #3d3020;
 
   /* shadcn base — dark theme values (since dark is default) */
-  --background: #0D0B08;
-  --foreground: #E6C699;
+  --background: #0d0b08;
+  --foreground: #e6c699;
   --card: #161310;
-  --card-foreground: #C8B88A;
+  --card-foreground: #c8b88a;
   --popover: #161310;
-  --popover-foreground: #C8B88A;
-  --primary: #E6C699;
-  --primary-foreground: #0D0B08;
-  --secondary: #201C17;
-  --secondary-foreground: #C8B88A;
-  --muted: #201C17;
-  --muted-foreground: #55504A;
-  --accent: #201C17;
-  --accent-foreground: #E6C699;
+  --popover-foreground: #c8b88a;
+  --primary: #e6c699;
+  --primary-foreground: #0d0b08;
+  --secondary: #201c17;
+  --secondary-foreground: #c8b88a;
+  --muted: #201c17;
+  --muted-foreground: #55504a;
+  --accent: #201c17;
+  --accent-foreground: #e6c699;
   --destructive: oklch(0.704 0.191 22.216);
-  --border: #2A2520;
-  --input: #2A2520;
-  --ring: #B09060;
-  --sidebar: #0D0B08;
-  --sidebar-foreground: #55504A;
-  --sidebar-primary: #E6C699;
-  --sidebar-primary-foreground: #0D0B08;
-  --sidebar-accent: #201C17;
-  --sidebar-accent-foreground: #E6C699;
-  --sidebar-border: #2A2520;
-  --sidebar-ring: #B09060;
+  --border: #2a2520;
+  --input: #2a2520;
+  --ring: #b09060;
+  --sidebar: #0d0b08;
+  --sidebar-foreground: #55504a;
+  --sidebar-primary: #e6c699;
+  --sidebar-primary-foreground: #0d0b08;
+  --sidebar-accent: #201c17;
+  --sidebar-accent-foreground: #e6c699;
+  --sidebar-border: #2a2520;
+  --sidebar-ring: #b09060;
 }
 
 /* ─── Light Mode (Field Instrument) ─── */
 .light {
-  --bg-base: #E8E0C8;
-  --digit-primary: #1C1A0E;
-  --digit-colon: #4A4030;
-  --digit-dim: #6A6050;
-  --label-primary: #4A4030;
-  --label-muted: #8A8070;
-  --tip-border: #C0B898;
+  --bg-base: #e8e0c8;
+  --digit-primary: #1c1a0e;
+  --digit-colon: #4a4030;
+  --digit-dim: #6a6050;
+  --label-primary: #4a4030;
+  --label-muted: #8a8070;
+  --tip-border: #c0b898;
 
-  --background: #E8E0C8;
-  --foreground: #1C1A0E;
-  --card: #DDD8C0;
-  --card-foreground: #1C1A0E;
-  --popover: #DDD8C0;
-  --popover-foreground: #1C1A0E;
-  --primary: #1C1A0E;
-  --primary-foreground: #E8E0C8;
-  --secondary: #D8D0B8;
-  --secondary-foreground: #1C1A0E;
-  --muted: #D8D0B8;
-  --muted-foreground: #8A8070;
-  --accent: #D8D0B8;
-  --accent-foreground: #1C1A0E;
+  --background: #e8e0c8;
+  --foreground: #1c1a0e;
+  --card: #ddd8c0;
+  --card-foreground: #1c1a0e;
+  --popover: #ddd8c0;
+  --popover-foreground: #1c1a0e;
+  --primary: #1c1a0e;
+  --primary-foreground: #e8e0c8;
+  --secondary: #d8d0b8;
+  --secondary-foreground: #1c1a0e;
+  --muted: #d8d0b8;
+  --muted-foreground: #8a8070;
+  --accent: #d8d0b8;
+  --accent-foreground: #1c1a0e;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #C0B898;
-  --input: #C0B898;
-  --ring: #4A4030;
-  --sidebar: #E8E0C8;
-  --sidebar-foreground: #4A4030;
-  --sidebar-primary: #1C1A0E;
-  --sidebar-primary-foreground: #E8E0C8;
-  --sidebar-accent: #D8D0B8;
-  --sidebar-accent-foreground: #1C1A0E;
-  --sidebar-border: #C0B898;
-  --sidebar-ring: #4A4030;
+  --border: #c0b898;
+  --input: #c0b898;
+  --ring: #4a4030;
+  --sidebar: #e8e0c8;
+  --sidebar-foreground: #4a4030;
+  --sidebar-primary: #1c1a0e;
+  --sidebar-primary-foreground: #e8e0c8;
+  --sidebar-accent: #d8d0b8;
+  --sidebar-accent-foreground: #1c1a0e;
+  --sidebar-border: #c0b898;
+  --sidebar-ring: #4a4030;
 }
 
 @layer base {

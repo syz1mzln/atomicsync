@@ -8,8 +8,8 @@ interface SyncStatusIndicatorProps {
 
 const DOT_COLOR: Record<SyncStatus, string> = {
   syncing: '#E6C699', // amber — pulsing
-  synced: '#4CAF50',  // green
-  failed: '#E57373',  // soft red
+  synced: '#4CAF50', // green
+  failed: '#E57373', // soft red
 }
 
 const STATUS_LABEL: Record<SyncStatus, string> = {
@@ -32,10 +32,7 @@ export function SyncStatusIndicator({ status }: SyncStatusIndicatorProps) {
           backgroundColor: DOT_COLOR[status],
         }}
       />
-      <span
-        className="text-xs font-mono"
-        style={{ color: 'var(--label-primary)' }}
-      >
+      <span className="text-xs font-mono" style={{ color: 'var(--label-primary)' }}>
         {STATUS_LABEL[status]}
       </span>
     </div>

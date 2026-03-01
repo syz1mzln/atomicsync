@@ -56,10 +56,7 @@ export function EmailRevealSection({ voted, otherText }: EmailRevealSectionProps
 
   if (emailState === 'skipped') {
     return (
-      <p
-        className="text-sm font-mono text-center mt-6"
-        style={{ color: 'var(--label-muted)' }}
-      >
+      <p className="text-sm font-mono text-center mt-6" style={{ color: 'var(--label-muted)' }}>
         Vote counted. Thanks.
       </p>
     )
@@ -67,19 +64,13 @@ export function EmailRevealSection({ voted, otherText }: EmailRevealSectionProps
 
   return (
     <div className="flex flex-col items-center gap-4 mt-6 w-full max-w-sm mx-auto">
-      <p
-        className="text-sm font-mono text-center"
-        style={{ color: 'var(--label-primary)' }}
-      >
-        Get notified when{' '}
-        <span style={{ color: 'var(--digit-primary)' }}>{featureName}</span> ships.
+      <p className="text-sm font-mono text-center" style={{ color: 'var(--label-primary)' }}>
+        Get notified when <span style={{ color: 'var(--digit-primary)' }}>{featureName}</span>{' '}
+        ships.
       </p>
 
       {emailState === 'success' ? (
-        <p
-          className="text-sm font-mono text-center"
-          style={{ color: 'var(--digit-primary)' }}
-        >
+        <p className="text-sm font-mono text-center" style={{ color: 'var(--digit-primary)' }}>
           You&apos;re in.
         </p>
       ) : (
@@ -128,10 +119,7 @@ export function EmailRevealSection({ voted, otherText }: EmailRevealSectionProps
             No thanks
           </button>
 
-          <p
-            className="text-xs font-mono text-center"
-            style={{ color: 'var(--label-muted)' }}
-          >
+          <p className="text-xs font-mono text-center" style={{ color: 'var(--label-muted)' }}>
             No spam. One email when it ships.
           </p>
         </form>

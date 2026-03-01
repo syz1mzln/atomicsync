@@ -13,11 +13,7 @@ export const metadata: Metadata = {
   description: 'NTP-synced precision time reference for mechanical watch owners.',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -36,9 +32,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body className={`${jetbrainsMono.variable} font-mono antialiased`}>
-        {children}
-      </body>
+      <body className={`${jetbrainsMono.variable} font-mono antialiased`}>{children}</body>
     </html>
   )
 }

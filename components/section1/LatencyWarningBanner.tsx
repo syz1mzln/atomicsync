@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { X } from 'lucide-react'
+import { STORAGE_KEYS } from '@/lib/storage-keys'
 
 interface LatencyWarningBannerProps {
   latencyMs: number | null
@@ -17,14 +18,14 @@ export function LatencyWarningBanner({ latencyMs }: LatencyWarningBannerProps) {
 
   // Check sessionStorage on mount
   useEffect(() => {
-    if (sessionStorage.getItem('atomictime_latency_dismissed') === 'true') {
+    if (sessionStorage.getItem(STORAGE_KEYS.LATENCY_DISMISSED) === 'true') {
       setDismissed(true)
     }
   }, [])
 
   const handleDismiss = () => {
     setDismissed(true)
-    sessionStorage.setItem('atomictime_latency_dismissed', 'true')
+    sessionStorage.setItem(STORAGE_KEYS.LATENCY_DISMISSED, 'true')
   }
 
   const show = !dismissed && latencyMs !== null && latencyMs > 200

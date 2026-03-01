@@ -4,9 +4,7 @@ import { useEffect, useState } from 'react'
 import { City } from '@/lib/cities'
 import { SecondaryClockCell } from './SecondaryClockCell'
 import { TimezoneSelector } from './TimezoneSelector'
-
-const LS_KEY = 'atomictime_timezones'
-const LEGACY_KEY = 'atomictime_tz2'
+import { STORAGE_KEYS } from '@/lib/storage-keys'
 
 interface TimezoneStripProps {
   getDisplayTime: () => number
@@ -17,14 +15,14 @@ export function TimezoneStrip({ getDisplayTime }: TimezoneStripProps) {
 
   // Load from localStorage + run migration on mount
   useEffect(() => {
-    const legacy = localStorage.getItem(LEGACY_KEY)
-    const current = localStorage.getItem(LS_KEY)
+    const legacy = localStorage.getItem(STORAGE_KEYS.TIMEZONES_LEGACY)
+    const current = localStorage.getItem(STORAGE_KEYS.TIMEZONES)
 
     if (legacy && !current) {
       try {
         const parsed = JSON.parse(legacy)
-        localStorage.setItem(LS_KEY, JSON.stringify([parsed]))
-        localStorage.removeItem(LEGACY_KEY)
+        localStorage.setItem(STORAGE_KEYS.TIMEZONES, JSON.stringify([parsed]))
+        localStorage.removeItem(STORAGE_KEYS.TIMEZONES_LEGACY)
         setCities([parsed])
         return
       } catch {
@@ -43,7 +41,7 @@ export function TimezoneStrip({ getDisplayTime }: TimezoneStripProps) {
 
   const persist = (updated: City[]) => {
     setCities(updated)
-    localStorage.setItem(LS_KEY, JSON.stringify(updated))
+    localStorage.setItem(STORAGE_KEYS.TIMEZONES, JSON.stringify(updated))
   }
 
   const addCity = (city: City) => {
@@ -81,9 +79,7 @@ export function TimezoneStrip({ getDisplayTime }: TimezoneStripProps) {
       )}
 
       {/* Add button — hidden when 4 clocks active */}
-      {cities.length < 4 && (
-        <TimezoneSelector onSelect={addCity} />
-      )}
+      {cities.length < 4 && <TimezoneSelector onSelect={addCity} />}
     </div>
   )
 }

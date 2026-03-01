@@ -3,7 +3,14 @@
 import { useState } from 'react'
 import { Check, ChevronsUpDown } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command'
 import { CITIES, City } from '@/lib/cities'
 
 interface TimezoneSelectorProps {
@@ -14,7 +21,13 @@ interface TimezoneSelectorProps {
   onOpenChange?: (open: boolean) => void
 }
 
-export function TimezoneSelector({ onSelect, trigger, selectedCity, open: controlledOpen, onOpenChange }: TimezoneSelectorProps) {
+export function TimezoneSelector({
+  onSelect,
+  trigger,
+  selectedCity,
+  open: controlledOpen,
+  onOpenChange,
+}: TimezoneSelectorProps) {
   const [internalOpen, setInternalOpen] = useState(false)
   const open = controlledOpen !== undefined ? controlledOpen : internalOpen
   const setOpen = onOpenChange ?? setInternalOpen
